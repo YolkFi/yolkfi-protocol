@@ -5,9 +5,9 @@
 ---
 
 **Track:** Open Track, Build Award
-**Total budget:** **$121,400**
+**Total budget:** **$94,000**
 **Timeline:** December 15, 2026 to April 8, 2027 (3.75 months)
-**Budget split:** T1 $40,500 (33.4%) / T2 $42,400 (34.9%) / T3 $38,500 (31.7%)
+**Budget split:** T1 $31,400 (33.4%) / T2 $32,800 (34.9%) / T3 $29,800 (31.7%)
 **Deliverables:** 11 (4 / 4 / 3)
 **Ecosystem components used:** Stellar Wallets Kit (T1), Privy and Bridge (T2), Soroswap (T3), OpenZeppelin Stellar token and RWA libraries (T2)
 
@@ -21,7 +21,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 
 ---
 
-## Tranche 1 — MVP: Flock Registry, Accrual Engine, Identity Layer and Attestation Gateway ($40,500)
+## Tranche 1 — MVP: Flock Registry, Accrual Engine, Identity Layer and Attestation Gateway ($31,400)
 
 **Distribution channels.** Public repository and attestation design shared in Soroban developer channels; A.T. Grup's existing commercial partners and the farm's own network informed through YolkFi's site and social accounts.
 
@@ -34,7 +34,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - `LotShare` instances deployed with `salt = sha256(lot_id ‖ doc_root)`: the pre-computed address matches the deployed address for every lot, and a second deployment with the same salt is rejected on-chain
 - Early-termination path tested end to end against a simulated sanitary depopulation: transfers frozen, reserve released, residual settlement computed pro rata
 - Public repository with CI passing, published wasm hash and a documented contract interface
-**Budget:** $9,000
+**Budget:** $7,000
 **Delivery date:** December 31, 2026
 
 ### 1.2 `RevenueDistributor`: pull-based accrual engine
@@ -47,7 +47,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Overflow safety: fuzz run across the documented revenue envelope with checked arithmetic and `overflow-checks` enabled, producing no arithmetic panic and no wrap
 - Zero-revenue and loss periods absorbed by the lot reserve and a carried-forward deficit, with the accrual index never decreasing
 - Test coverage above 85% on the distributor crate
-**Budget:** $8,500
+**Budget:** $6,600
 **Delivery date:** January 23, 2027
 
 ### 1.3 `IdentityRegistry`, investor onboarding and wallet binding
@@ -59,7 +59,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Wallet binding functional through Stellar Wallets Kit for all supported connectors, with a signature-based proof of control recorded against the identity
 - No personal data written on-chain, verified by inspecting every emitted event and stored key for the test identities
 - Test coverage above 85% on the identity crate
-**Budget:** $8,300
+**Budget:** $6,400
 **Delivery date:** February 3, 2027
 
 ### 1.4 `AttestationGateway`: farm ERP and IoT connector with the attestation signer set
@@ -71,12 +71,12 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Archive head hash published, with a documented procedure by which a third party confirms any attested figure against its archive segment
 - Farm operator console (lot dashboard, report review, signature status) operational and used by farm staff during the replay run
 - The data-access path to the Big Dutchman and ERP systems documented in the repository (interface, transport, refresh cadence)
-**Budget:** $14,700
+**Budget:** $11,400
 **Delivery date:** February 6, 2027
 
 ---
 
-## Tranche 2 — Testnet: Compliance-Gated Token, Oracle Finalisation, Investor Journey and Threat Model ($42,400)
+## Tranche 2 — Testnet: Compliance-Gated Token, Oracle Finalisation, Investor Journey and Threat Model ($32,800)
 
 **Distribution channels.** Testnet investor journey opened to A.T. Grup's partners and to YolkFi's waiting list; SEP-57 conformance notes shared with the Stellar regulated-asset working group and Soroban developer channels.
 
@@ -90,7 +90,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Snapshot migration proven for `recover` and `forced_transfer`: neither loses or duplicates accrued value in 100% of trials
 - Every compliance rule change emits an event; configuration state re-derivable from events alone
 - Conformance delta against the pinned SEP-57 draft version documented in `docs/sep57-conformance.md`; test coverage above 85% across the token and compliance crates
-**Budget:** $7,900
+**Budget:** $6,100
 **Delivery date:** February 20, 2027
 
 ### 2.2 `ProductionOracle` and `Treasury`
@@ -103,7 +103,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Three-way reconciliation report generated automatically for each period (graded eggs, invoiced revenue, on-chain EURC deposited), reconciling within a documented tolerance with every variance identified and explained, and explorer links per deposit
 - `Treasury` escrow live on testnet under multisig; disbursement without the required threshold rejected in 100% of negative tests; reserve retention matching `reserve_bps` exactly for every period
 - Test coverage above 85% on the oracle and treasury crates
-**Budget:** $10,900
+**Budget:** $8,400
 **Delivery date:** February 27, 2027
 
 ### 2.3 Investor journey: Privy access layer, web application, Bridge EUR on-ramp and primary subscription
@@ -116,7 +116,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Bridge sandbox flow (virtual IBAN created, simulated SEPA deposit, EURC settled to the testnet treasury, `LotShare` issued) demonstrated for at least 20 consecutive subscriptions with 0 attribution failures; duplicate webhooks produce exactly one state transition in 100% of trials
 - Compliance gate enforced structurally: funds from an identity that is unverified, expired or outside the lot's eligible jurisdictions are held and issuance refused in 100% of negative tests; an issuance request exceeding authorised supply reverts on-chain in 100% of trials
 - Index correctness under progressive subscription verified across at least 10 staged subscriptions spanning a revenue period; end-to-end browser suite (onboarding, subscription view, claim, transfer) passing against testnet with 0 failures in CI
-**Budget:** $16,300
+**Budget:** $12,600
 **Delivery date:** March 6, 2027
 
 ### 2.4 STRIDE threat model, on-chain monitoring plan and dispute resolution path
@@ -127,12 +127,12 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Dispute path implemented and tested: a challenged report can be resolved by re-attestation or withdrawn, and in 100% of trials the lot's accounting resumes with no gap, no double-count and no index movement during the dispute
 - Upgrade attempted before the timelock elapses reverts in 100% of trials; the pause halts deposits, claims and transfers and is covered by one test per entry point; role and signer-set changes emit events and are re-derivable from them
 - Monitoring plan reviewed against the SDF template checklist, with the review recorded in the repository
-**Budget:** $7,300
+**Budget:** $5,700
 **Delivery date:** March 13, 2027
 
 ---
 
-## Tranche 3 — Mainnet: Production Launch, Live Lot, Exit Paths and Verification ($38,500)
+## Tranche 3 — Mainnet: Production Launch, Live Lot, Exit Paths and Verification ($29,800)
 
 **Distribution channels.** First live lot subscribed by identity-verified accounts of the issuing entity and the team; public evidence page and verification tool announced to Stellar RWA builders and to A.T. Grup's commercial network; Season 1 public offering prepared on that basis.
 
@@ -146,7 +146,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Monitoring live on mainnet addresses with continuous invariant checks on Σ deposits ≥ Σ claims, reserve integrity, dust accounting and attestation freshness
 - Alert drill on mainnet: at least 5 simulated anomaly classes (stale attestation, invariant breach, unauthorised role call, treasury exposure breach, storage-rent runway), each raising a routed alert in under 5 minutes, with the drill recorded in the repository
 - `TtlSweeper` operating on a schedule with a reported rent runway for every persistent entry class; go-live checklist and rollback procedure published
-**Budget:** $12,200
+**Budget:** $9,400
 **Delivery date:** March 18, 2027
 
 ### 3.2 Holder exit paths: stablecoin routing, fiat withdrawal and permissioned secondary transfer
@@ -158,7 +158,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Pre-check accuracy: a transfer the interface shows as eligible succeeds in 100% of cases; a transfer to an ineligible counterparty is blocked before signing and also reverts on-chain if forced
 - Accrual correctness across transfers verified over at least 3 settlement periods on the reference environment plus the live period, with seller and buyer entitlements matching independently computed values within the documented rounding policy; lock-up enforced in 100% of trials
 - Liquidity design note published explaining why the compliance-gated share token is not AMM-listed and how the stablecoin leg is routed instead
-**Budget:** $12,400
+**Budget:** $9,600
 **Delivery date:** April 3, 2027
 
 ### 3.3 First live settlement cycle, public evidence package, open-source release v1.0.0 and verification toolkit
@@ -171,7 +171,7 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 - `yolkfi-verify` reproduces 100% of mainnet distributions for the live period from public inputs only, reporting Σ deposits = Σ claims + unclaimed accrual + reserve + `undistributed_dust`, and exiting non-zero on each of at least 5 injected tamper scenarios
 - Verification run reproduced from a fresh machine using only the public repository and public ledger data, with the recorded run published in the repository
 - SEP-41 / SEP-57 regulated-RWA integration guide published in the repository
-**Budget:** $13,900
+**Budget:** $10,800
 **Delivery date:** April 8, 2027
 
 ---
@@ -180,9 +180,9 @@ Every component named below is specified in [ARCHITECTURE.md](./ARCHITECTURE.md)
 
 | Tranche | Phase | Period | Deliverables | Ecosystem components | Budget | % |
 |---|---|---|---|---|---|---|
-| T1 | MVP: registry, accrual, identity, attestation | December 15, 2026 to February 6, 2027 | 4 | Stellar Wallets Kit | $40,500 | 33.4% |
-| T2 | Testnet: regulated token, oracle, investor journey, threat model | February 9 to March 13, 2027 | 4 | Privy, Bridge, OpenZeppelin Stellar libraries | $42,400 | 34.9% |
-| T3 | Mainnet: live lot, exit paths, settlement cycle, verification | March 16 to April 8, 2027 | 3 | Soroswap | $38,500 | 31.7% |
-| **Total** | | **3.75 months** | **11** | | **$121,400** | 100% |
+| T1 | MVP: registry, accrual, identity, attestation | December 15, 2026 to February 6, 2027 | 4 | Stellar Wallets Kit | $31,400 | 33.4% |
+| T2 | Testnet: regulated token, oracle, investor journey, threat model | February 9 to March 13, 2027 | 4 | Privy, Bridge, OpenZeppelin Stellar libraries | $32,800 | 34.9% |
+| T3 | Mainnet: live lot, exit paths, settlement cycle, verification | March 16 to April 8, 2027 | 3 | Soroswap | $29,800 | 31.7% |
+| **Total** | | **3.75 months** | **11** | | **$94,000** | 100% |
 
 **Evidence model.** No tranche closes on deployment. T1 closes on a multi-month replay of real farm data passing through the attestation set into on-chain accrual, with constant-cost deposits and overflow safety proven. T2 closes on a regulated token whose every compliance rule is proven to reject and to revert, an oracle quorum the two aligned signers cannot meet alone, a reconciling period series, a complete investor journey from SEPA to shares, and a dispute path that preserves accounting continuity. T3 closes on a real lot completing a real settlement period on mainnet, working exit paths, and a verification run reproduced from public data only. Every criterion resolves to an explorer link, a public repository artefact or a reproducible report.
