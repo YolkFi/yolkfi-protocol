@@ -63,7 +63,7 @@ flowchart TB
         AG["AttestationGateway<br/>normalise · bound-check · canonicalise"]
         S1["Signer A<br/>farm operations"]
         S2["Signer B<br/>YolkFi protocol"]
-        S3["Signer C<br/>independent attestor"]
+        S3["Signers C1 & C2<br/>CECCAR accountant + DSVSA vet"]
         ARC["Telemetry archive<br/>hash-linked log"]
     end
 
@@ -347,18 +347,18 @@ sequenceDiagram
 ## 6. The attestation set: why the numbers can be trusted
 
 `ProductionOracle` accepts a report only when it carries a valid signature quorum **that always includes the
-independent attestor**. A plain 2-of-3 would be decorative here: the farm-operations signer and the protocol
+two independent attestors (a CECCAR-accredited accountant for invoiced revenue and a DSVSA-accredited veterinarian for headcount and mortality)**. A plain 2-of-3 between internal parties would be decorative here: the farm-operations signer and the protocol
 signer sit on the same side of the table — one of them is a co-founder of the issuer who works at the operator —
 so any threshold they can meet between themselves reproduces exactly the problem the attestation set exists to
-solve. The attestor seat is therefore **mandatory**, implemented as signer weights in `FlockRegistry`
-(operations 1, protocol 1, attestor 2, threshold 3): a report needs the attestor plus at least one of the other
-two, and the two aligned signers alone cannot finalise anything.
+solve. The independent attestor seats are therefore **mandatory**, implemented as signer weights in `FlockRegistry`
+so that the two aligned signers alone cannot finalise anything: a report requires the independent attestor quorum plus at least one of the operational/protocol signers.
 
 | Signer | Basis of signature |
 |---|---|
 | **A — Farm operations** | Grading-line counts and barn telemetry from Big Dutchman systems |
 | **B — YolkFi protocol** | Gateway-computed figures reconciled against the archived raw telemetry |
-| **C — Independent attestor (mandatory)** | Settlement statements from the commercial egg buyer, cross-checked against invoiced revenue |
+| **C1 — Independent Financial Attestor (CECCAR-accredited accountant, mandatory)** | Monthly commercial egg sales invoices, buyer settlement statements, and contractual cost-allocation verification |
+| **C2 — Independent Biological Attestor (DSVSA-accredited veterinarian, mandatory)** | Initial flock placement headcount, cumulative mortality records, and official veterinary inspection logs |
 
 If no independent attestor is seated at launch, the configuration is stated as what it is — operator plus
 protocol, with the attestor seat provisioned and empty — rather than presented as a three-party quorum it is not.
@@ -489,6 +489,7 @@ read into this document.**
 | Implied annual production | ~58–61M eggs | 200,000 × 0.80–0.85 × 365 |
 | FY2025 revenue (filed) | RON 36,195,261 ≈ €7.1M | Romanian company accounts, CUI RO9971244 |
 | Implied realised price | **≈ €0.12 per egg** | €7.1M ÷ ~59M eggs per year, assuming egg sales account for substantially all revenue |
+| Season 1 Lot (`LOT-S1-VLASCA`) | **30,000 fungible `LotShares`** (`1 share = 1 hen-equivalent`) | Placed at Ferma Vlasca (September 2027 – August 2028 placement window, 62–72 week cycle; 30-day initial lock-up; 80% Holder / 10% Farm / 10% YolkFi split; co-attested by CECCAR accountant & DSVSA veterinarian) |
 | FY2025 net profit (filed) | RON 7,567,533 | Same source |
 | Historical downside | RON −7,143,119 (2019); 0.4% net margin (2024) | Same source — the reason `reserve_bps` exists |
 

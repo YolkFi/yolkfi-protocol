@@ -20,10 +20,10 @@
 | **Admin / Deployer** | — | `GAKZI376VZXARSJIVNU5VV7DIYJMNPGAR3IQR5GWNQDZA3AZZ25QTULV` |
 | **Farm Operator (`A.T. Grup`)** | `1` | `GA4AUUNY3FZGTEQRUUMBDYZO5SJCULXZQSLQIR4JHP3FRYRHQVIPHKCU` |
 | **Protocol Signer (`YolkFi`)** | `1` | `GAZTDRKQFWLMQ3YFLYTMIR5NF6PAD2GKFT26DDMMYUEFOCGIO4CQYV2Z` |
-| **Independent Attestor (Mandatory)** | `2` | `GDHNXTECIZHNCFYNQJNIB2YFVH2T443CEWYGFLIHPM24CIE2LMXGYUHD` |
-| **Quorum Threshold** | **`3` of `4`** | Requires Independent Attestor (`weight 2`) + at least one of Farm Operator or Protocol Signer |
+| **Independent Attestor Seat (Mandatory: CECCAR Accountant + DSVSA Veterinarian)** | `2` | `GDHNXTECIZHNCFYNQJNIB2YFVH2T443CEWYGFLIHPM24CIE2LMXGYUHD` |
+| **Quorum Threshold** | **`3` of `4`** | Requires Independent Attestor Quorum (`weight 2`: CECCAR Accountant for invoiced revenue + DSVSA Veterinarian for headcount/mortality) + at least one of Farm Operator or Protocol Signer |
 
-### Registered Season 1 Test Lots (`FlockRegistry`)
+### Registered Season 1 Test Lots (`FlockRegistry` — `LOT-S1-VLASCA`: 30,000 Shares Total, Sept 2027 – Aug 2028 Window, 30-Day Lock-Up)
 
 | Lot Symbol | Barn | Breed | Headcount | Share Supply | Reserve (`bps`) | `doc_root` (SHA-256) | Registration Tx Hash |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
